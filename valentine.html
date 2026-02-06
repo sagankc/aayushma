@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Aayushma💖</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  height: 100vh;
+  overflow: hidden;
+  font-family: "Segoe UI", system-ui, -apple-system, BlinkMacSystemFont;
+  background: radial-gradient(circle at top, #ffe6eb, #f7b2c4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* START SCREEN */
+#startScreen {
+  position: fixed;
+  inset: 0;
+  background: linear-gradient(135deg, #ff9a9e, #fad0c4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 999;
+}
+
+#startBtn {
+  padding: 18px 38px;
+  font-size: 20px;
+  border-radius: 50px;
+  border: none;
+  background: white;
+  color: #e6396c;
+  box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+  cursor: pointer;
+  animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.08); }
+  100% { transform: scale(1); }
+}
+
+/* HEARTS */
+.heart {
+  position: absolute;
+  bottom: -20px;
+  color: rgba(255, 60, 100, 0.7);
+  animation: floatUp linear infinite;
+  user-select: none;
+}
+
+@keyframes floatUp {
+  from {
+    transform: translateY(0) rotate(0deg);
+    opacity: 1;
+  }
+  to {
+    transform: translateY(-120vh) rotate(360deg);
+    opacity: 0;
+  }
+}
+
+/* CARD */
+.card {
+  background: rgba(255,255,255,0.94);
+  backdrop-filter: blur(15px);
+  padding: 48px 38px;
+  border-radius: 32px;
+  box-shadow: 0 30px 60px rgba(0,0,0,0.2);
+  text-align: center;
+  width: 90%;
+  max-width: 420px;
+  animation: zoomIn 1s ease;
+}
+
+@keyframes zoomIn {
+  from { transform: scale(0.7); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+
+h1 {
+  color: #e6396c;
+  font-size: 30px;
+  margin-bottom: 8px;
+}
+
+.subtitle {
+  font-size: 16px;
+  color: #777;
+  margin-bottom: 28px;
+}
+
+.question {
+  font-size: 20px;
+  color: #444;
+  margin-bottom: 36px;
+  line-height: 1.4;
+}
+
+.buttons {
+  position: relative;
+  height: 100px;
+}
+
+button {
+  padding: 15px 34px;
+  font-size: 17px;
+  border-radius: 16px;
+  border: none;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+#yesBtn {
+  background: linear-gradient(135deg, #ff4d6d, #ff7a92);
+  color: white;
+  box-shadow: 0 12px 30px rgba(255,77,109,0.5);
+}
+
+#yesBtn:hover {
+  transform: scale(1.08);
+}
+
+#noBtn {
+  position: absolute;
+  background: #eee;
+  color: #333;
+  left: 55%;
+}
+
+/* FINAL SCREEN */
+.final {
+  position: fixed;
+  inset: 0;
+  background: radial-gradient(circle, #ffd6e0, #ff9ab3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.finalBox {
+  background: white;
+  padding: 60px 45px;
+  border-radius: 36px;
+  text-align: center;
+  box-shadow: 0 30px 70px rgba(0,0,0,0.3);
+  animation: explode 1s ease;
+}
+
+@keyframes explode {
+  0% { transform: scale(0); }
+  80% { transform: scale(1.1); }
+  100% { transform: scale(1); }
+}
+
+.finalBox h1 {
+  font-size: 34px;
+  margin-bottom: 12px;
+}
+
+.finalBox p {
+  font-size: 18px;
+  color: #555;
+  line-height: 1.5;
+}
+
+@media (max-width: 480px) {
+  h1 { font-size: 26px; }
+  .question { font-size: 18px; }
+}
+</style>
+</head>
+
+<body>
+
+<!-- START -->
+<div id="startScreen">
+  <button id="startBtn">Tap to Begin 💖</button>
+</div>
+
+<audio id="music" loop>
+  <source src="https://cdn.pixabay.com/audio/2022/03/15/audio_7f9c9b8c36.mp3">
+</audio>
+
+<div class="card" id="mainCard" style="display:none;">
+  <h1>Aayushma💕</h1>
+  <div class="subtitle">Just something from my heart</div>
+
+  <div class="question">
+    Will you be my Valentine?
+  </div>
+
+  <div class="buttons">
+    <button id="yesBtn">Yes 💖</button>
+    <button id="noBtn">No</button>
+  </div>
+</div>
+
+<script>
+const startBtn = document.getElementById("startBtn");
+const startScreen = document.getElementById("startScreen");
+const music = document.getElementById("music");
+const card = document.getElementById("mainCard");
+const noBtn = document.getElementById("noBtn");
+const yesBtn = document.getElementById("yesBtn");
+
+/* START */
+startBtn.onclick = () => {
+  music.play();
+  startScreen.style.display = "none";
+  card.style.display = "block";
+};
+
+/* RUNAWAY NO */
+function moveNo() {
+  const x = Math.random() * 220;
+  const y = Math.random() * 70;
+  noBtn.style.left = x + "px";
+  noBtn.style.top = y + "px";
+}
+noBtn.addEventListener("mouseover", moveNo);
+noBtn.addEventListener("click", moveNo);
+
+/* HEART RAIN */
+function createHeart() {
+  const heart = document.createElement("div");
+  heart.className = "heart";
+  heart.innerHTML = "❤";
+  heart.style.left = Math.random() * 100 + "vw";
+  heart.style.fontSize = Math.random() * 20 + 18 + "px";
+  heart.style.animationDuration = Math.random() * 3 + 4 + "s";
+  document.body.appendChild(heart);
+  setTimeout(() => heart.remove(), 7000);
+}
+setInterval(createHeart, 220);
+
+/* YES */
+yesBtn.onclick = () => {
+  document.body.innerHTML = `
+    <div class="final">
+      <div class="finalBox">
+        <h1>My Love Said Yes 💘</h1>
+        <p>
+          You are the best thing that ever happened in my life 💕<br>
+          I’m really lucky to have you 💕<br>
+	  I love you so so much 💕
+        </p>
+      </div>
+    </div>
+  `;
+};
+</script>
+
+</body>
+</html>
